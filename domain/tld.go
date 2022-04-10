@@ -5,8 +5,9 @@ const (
 	Net = ".net"
 	Org = ".org"
 	Io  = ".io"
+	Dev = ".dev"
 )
 
 func AllDomains() []string {
-	return []string{Com, Net, Org}
+	return []string{Com, Net, Org, Io, Dev}
 }
