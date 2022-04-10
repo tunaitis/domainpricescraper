@@ -22,7 +22,7 @@ func (s *Scraper) Scrape() (map[domain.Registrar]map[string]float64, error) {
 		e := s.registrars[i]
 
 		// make a copy of the domain list before passing it to a registrar
-		// to prevent the registrar modifying the original slice
+		// to prevent the registrar from modifying the original slice
 		d := make([]string, len(s.domains))
 		copy(d, s.domains)
 
