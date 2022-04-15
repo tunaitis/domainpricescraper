@@ -18,4 +18,3 @@ func (s *Scraper) UseRegistrar(r domain.Registrar) *Scraper {
 	}
 	return s
 }
-
