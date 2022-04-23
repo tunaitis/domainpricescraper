@@ -7,7 +7,7 @@ import (
 
 type Scraper struct {
 	registrars []domain.Registrar
-	domains    []string
+	Domains    []string
 	collector  *colly.Collector
 }
 
@@ -23,8 +23,8 @@ func (s *Scraper) Scrape() (map[domain.Registrar]map[string]float64, error) {
 
 		// make a copy of the domain list before passing it to a registrar
 		// to prevent the registrar from modifying the original slice
-		d := make([]string, len(s.domains))
-		copy(d, s.domains)
+		d := make([]string, len(s.Domains))
+		copy(d, s.Domains)
 
 		r, err := e.Scrape(d)
 		if err != nil {

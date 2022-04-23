@@ -1,14 +1,19 @@
 package domainpricescraper
 
-import "github.com/tunaitis/domainpricescraper/domain"
+import (
+	"github.com/tunaitis/domainpricescraper/domain"
+	"sort"
+)
 
 func (s *Scraper) UseDomain(domain string) *Scraper {
-	s.domains = append(s.domains, domain)
+	s.Domains = append(s.Domains, domain)
+	sort.Strings(s.Domains)
 	return s
 }
 
 func (s *Scraper) UseAllDomains() *Scraper {
-	s.domains = domain.AllDomains()
+	s.Domains = domain.AllDomains()
+	sort.Strings(s.Domains)
 	return s
 }
 
