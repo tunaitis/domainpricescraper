@@ -1,6 +1,9 @@
 package namecom
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type price struct {
 	Tld   string  `json:"tld"`
@@ -11,7 +14,7 @@ func parsePrice(data []byte) ([]price, error) {
 	var prices []price
 	err := json.Unmarshal(data, &prices)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("%w (%s)", err, string(data))
 	}
 
 	return prices, nil
