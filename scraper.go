@@ -11,12 +11,23 @@ type Scraper struct {
 	collector  *colly.Collector
 }
 
+type Result struct {
+	Registrars map[string]map[string]float64
+	Domains    map[string]map[string]float64
+}
+
 func NewScraper() *Scraper {
 	return &Scraper{}
 }
 
-func (s *Scraper) Scrape() (map[domain.Registrar]map[string]float64, error) {
-	result := make(map[domain.Registrar]map[string]float64)
+func (s *Scraper) Scrape() (*Result, error) {
+
+	//result := make(map[domain.Registrar]map[string]float64)
+
+	result := &Result{
+		Registrars: make(map[string]map[string]float64),
+		Domains:    make(map[string]map[string]float64),
+	}
 
 	for i := range s.registrars {
 		e := s.registrars[i]
@@ -31,7 +42,14 @@ func (s *Scraper) Scrape() (map[domain.Registrar]map[string]float64, error) {
 			return nil, err
 		}
 
-		result[e] = r
+		result.Registrars[e.Name()] = r
+
+		for k := range r {
+			if result.Domains[k] == nil {
+				result.Domains[k] = make(map[string]float64)
+			}
+			result.Domains[k][e.Name()] = r[k]
+		}
 	}
 
 	return result, nil
