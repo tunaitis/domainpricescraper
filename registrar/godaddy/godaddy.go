@@ -2,20 +2,16 @@ package godaddy
 
 import (
 	"fmt"
-	"github.com/gocolly/colly/v2"
 	"github.com/tunaitis/domainpricescraper/util"
 	"net/http"
 	"strings"
 )
 
 type GoDaddy struct {
-	colly *colly.Collector
 }
 
 func New() *GoDaddy {
-	return &GoDaddy{
-		colly: colly.NewCollector(),
-	}
+	return &GoDaddy{}
 }
 
 func (g GoDaddy) Name() string {
