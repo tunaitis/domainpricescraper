@@ -8,7 +8,7 @@ import (
 	"net/url"
 )
 
-func download(u string, cookies []*http.Cookie) (io.Reader, error) {
+func download(u string, cookies []*http.Cookie, transport *http.Transport) (io.Reader, error) {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		return nil, err
@@ -26,6 +26,10 @@ func download(u string, cookies []*http.Cookie) (io.Reader, error) {
 		Jar: jar,
 	}
 
+	if transport != nil {
+		client.Transport = transport
+	}
+
 	req, err := http.NewRequest("GET", u, nil)
 	if err != nil {
 		return nil, err
@@ -41,8 +45,8 @@ func download(u string, cookies []*http.Cookie) (io.Reader, error) {
 	return resp.Body, nil
 }
 
-func DownloadString(u string, cookies []*http.Cookie) (string, error) {
-	r, err := download(u, cookies)
+func DownloadString(u string, cookies []*http.Cookie, transport *http.Transport) (string, error) {
+	r, err := download(u, cookies, transport)
 	if err != nil {
 		return "", err
 	}
@@ -55,8 +59,8 @@ func DownloadString(u string, cookies []*http.Cookie) (string, error) {
 	return string(d), nil
 }
 
-func DownloadDocument(u string, cookies []*http.Cookie) (*goquery.Document, error) {
-	r, err := download(u, cookies)
+func DownloadDocument(u string, cookies []*http.Cookie, transport *http.Transport) (*goquery.Document, error) {
+	r, err := download(u, cookies, transport)
 	if err != nil {
 		return nil, err
 	}

@@ -1,21 +1,25 @@
 package hover
 
 import (
+	"errors"
 	"fmt"
-	"github.com/gocolly/colly/v2"
 	"github.com/tunaitis/domainpricescraper/util"
-	"log"
+	"net/http"
 	"strings"
 )
 
 type Hover struct {
-	colly *colly.Collector
+	transport *http.Transport
 }
 
-func New() *Hover {
-	return &Hover{
-		colly: colly.NewCollector(),
+func New(options ...Option) *Hover {
+	h := &Hover{}
+
+	for _, opt := range options {
+		opt(h)
 	}
+
+	return h
 }
 
 func (h Hover) Name() string {
@@ -29,24 +33,28 @@ func (h Hover) Scrape(tld []string) (map[string]float64, error) {
 		tld[i] = strings.Replace(tld[i], ".", "", 1)
 	}
 
-	h.colly.OnHTML("div.table", func(c *colly.HTMLElement) {
-		prices, err := parsePrice(c.Attr("data-props"))
-		if err != nil {
-			log.Fatal(err)
-			return
-		}
-
-		for k, v := range prices {
-			if !util.Contains(tld, k) {
-				continue
-			}
-			result[fmt.Sprintf(".%s", k)] = v[1]
-		}
-	})
-
-	err := h.colly.Visit("https://www.hover.com/domain-pricing")
+	doc, err := util.DownloadDocument("https://www.hover.com/domain-pricing", nil, h.transport)
 	if err != nil {
 		return nil, err
+	}
+
+	table := doc.Find("div.table")
+	if table.Length() == 0 {
+		return nil, errors.New("table element not found")
+	}
+
+	priceAttr, _ := table.Attr("data-props")
+
+	prices, err := parsePrice(priceAttr)
+	if err != nil {
+		return nil, err
+	}
+
+	for k, v := range prices {
+		if !util.Contains(tld, k) {
+			continue
+		}
+		result[fmt.Sprintf(".%s", k)] = v[1]
 	}
 
 	return result, nil

@@ -34,7 +34,7 @@ func (g GoDaddy) Scrape(tld []string) (map[string]float64, error) {
 			},
 		}
 
-		doc, err := util.DownloadDocument(u, c)
+		doc, err := util.DownloadDocument(u, c, nil)
 		if err != nil {
 			return nil, err
 		}
