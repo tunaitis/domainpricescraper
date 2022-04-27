@@ -29,7 +29,7 @@ func (g Gandi) Scrape(tld []string) (map[string]float64, error) {
 
 		if docs[l] == nil {
 			u := fmt.Sprintf("https://www.gandi.net/en-US/domain/tld?prefix=%c", l)
-			doc, err := util.DownloadDocument(u, nil)
+			doc, err := util.DownloadDocument(u, nil, nil)
 
 			if err != nil {
 				return nil, err
