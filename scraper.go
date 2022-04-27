@@ -1,14 +1,12 @@
 package domainpricescraper
 
 import (
-	"github.com/gocolly/colly/v2"
 	"github.com/tunaitis/domainpricescraper/domain"
 )
 
 type Scraper struct {
 	registrars []domain.Registrar
 	Domains    []string
-	collector  *colly.Collector
 }
 
 type Result struct {

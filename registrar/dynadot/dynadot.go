@@ -3,20 +3,16 @@ package dynadot
 import (
 	"errors"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/gocolly/colly/v2"
 	"github.com/tunaitis/domainpricescraper/util"
 	"strconv"
 	"strings"
 )
 
 type Dynadot struct {
-	colly *colly.Collector
 }
 
 func New() *Dynadot {
-	return &Dynadot{
-		colly: colly.NewCollector(),
-	}
+	return &Dynadot{}
 }
 
 func (d Dynadot) Name() string {
