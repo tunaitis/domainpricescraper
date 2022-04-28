@@ -8,10 +8,17 @@ import (
 )
 
 type GoDaddy struct {
+	transport *http.Transport
 }
 
-func New() *GoDaddy {
-	return &GoDaddy{}
+func New(options ...Option) *GoDaddy {
+	g := &GoDaddy{}
+
+	for _, opt := range options {
+		opt(g)
+	}
+
+	return g
 }
 
 func (g GoDaddy) Name() string {
