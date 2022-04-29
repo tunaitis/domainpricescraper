@@ -12,3 +12,10 @@ func WithProxy(proxy *url.URL) Option {
 		g.transport = &http.Transport{Proxy: http.ProxyURL(proxy)}
 	}
 }
+
+func WithApi(key string, secret string) Option {
+	return func(g *GoDaddy) {
+		g.apiKey = key
+		g.apiSecret = secret
+	}
+}
