@@ -42,7 +42,7 @@ func (g *GoDaddy) getUsingApi(tld []string) (map[string]float64, error) {
 
 	for _, t := range tld {
 		d := fmt.Sprintf("401b30e3b8b5d629635a5c613cdb7919%s", t)
-		u := fmt.Sprintf("https://api.ote-godaddy.com/v1/domains/available?domain=%s&checkType=FAST&forTransfer=false", d)
+		u := fmt.Sprintf("https://api.godaddy.com/v1/domains/available?domain=%s&checkType=FAST&forTransfer=false", d)
 		r, err := util.NewRequest(u, nil, h, nil)
 
 		if err != nil {
