@@ -6,7 +6,8 @@ import (
 )
 
 type response struct {
-	Price int `json:"price"`
+	Price  int `json:"price"`
+	Period int `json:"period"`
 }
 
 func parseApiResponse(data []byte) (float64, error) {
@@ -16,5 +17,5 @@ func parseApiResponse(data []byte) (float64, error) {
 		return 0, fmt.Errorf("%w (%s)", err, string(data))
 	}
 
-	return float64(r.Price) / 1000000, nil
+	return float64(r.Price/r.Period) / 1000000, nil
 }
