@@ -8,7 +8,7 @@ import (
 	"net/url"
 )
 
-func download(u string, cookies []*http.Cookie, transport *http.Transport) (io.Reader, error) {
+func NewRequest(u string, cookies []*http.Cookie, headers map[string]string, transport *http.Transport) (*http.Response, error) {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		return nil, err
@@ -37,21 +37,25 @@ func download(u string, cookies []*http.Cookie, transport *http.Transport) (io.R
 
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15")
 
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
 
-	return resp.Body, nil
+	return resp, nil
 }
 
 func DownloadString(u string, cookies []*http.Cookie, transport *http.Transport) (string, error) {
-	r, err := download(u, cookies, transport)
+	r, err := NewRequest(u, cookies, nil, transport)
 	if err != nil {
 		return "", err
 	}
 
-	d, err := io.ReadAll(r)
+	d, err := io.ReadAll(r.Body)
 	if err != nil {
 		return "", err
 	}
@@ -60,12 +64,12 @@ func DownloadString(u string, cookies []*http.Cookie, transport *http.Transport)
 }
 
 func DownloadDocument(u string, cookies []*http.Cookie, transport *http.Transport) (*goquery.Document, error) {
-	r, err := download(u, cookies, transport)
+	r, err := NewRequest(u, cookies, nil, transport)
 	if err != nil {
 		return nil, err
 	}
 
-	doc, err := goquery.NewDocumentFromReader(r)
+	doc, err := goquery.NewDocumentFromReader(r.Body)
 	if err != nil {
 		return nil, err
 	}
