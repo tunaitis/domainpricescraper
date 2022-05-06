@@ -13,7 +13,7 @@ func New() *OVH {
 }
 
 func (g OVH) Name() string {
-	return "OVH"
+	return "OVHcloud"
 }
 
 func (g OVH) Scrape(tld []string) (map[string]float64, error) {

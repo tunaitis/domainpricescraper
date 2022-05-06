@@ -16,7 +16,7 @@ func New() *GoogleDomains {
 }
 
 func (g GoogleDomains) Name() string {
-	return "GoogleDomains"
+	return "Google Domains"
 }
 
 func (g GoogleDomains) Scrape(tld []string) (map[string]float64, error) {
