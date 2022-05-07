@@ -29,7 +29,7 @@ func New(options ...Option) *GoDaddy {
 }
 
 func (g *GoDaddy) Name() string {
-	return "GoDaddy"
+	return "godaddy"
 }
 
 func (g *GoDaddy) getUsingApi(tld []string) (map[string]float64, error) {

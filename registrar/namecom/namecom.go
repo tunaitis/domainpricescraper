@@ -12,7 +12,7 @@ func New() *NameCom {
 }
 
 func (n *NameCom) Name() string {
-	return "Name"
+	return "namecom"
 }
 
 func (n *NameCom) Scrape(tld []string) (map[string]float64, error) {

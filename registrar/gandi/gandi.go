@@ -16,7 +16,7 @@ func New() *Gandi {
 }
 
 func (g Gandi) Name() string {
-	return "Gandi"
+	return "gandi"
 }
 
 func (g Gandi) Scrape(tld []string) (map[string]float64, error) {

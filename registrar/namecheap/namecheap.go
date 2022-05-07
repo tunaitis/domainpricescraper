@@ -17,7 +17,7 @@ func New() *NameCheap {
 }
 
 func (n *NameCheap) Name() string {
-	return "NameCheap"
+	return "namecheap"
 }
 
 func (n *NameCheap) getPrice(row *goquery.Selection, name string) (string, error) {

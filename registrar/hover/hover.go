@@ -23,7 +23,7 @@ func New(options ...Option) *Hover {
 }
 
 func (h Hover) Name() string {
-	return "Hover"
+	return "hover"
 }
 
 func (h Hover) Scrape(tld []string) (map[string]float64, error) {

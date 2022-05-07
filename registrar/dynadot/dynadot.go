@@ -16,7 +16,7 @@ func New() *Dynadot {
 }
 
 func (d Dynadot) Name() string {
-	return "Dynadot"
+	return "dynadot"
 }
 
 func (d Dynadot) Scrape(tld []string) (map[string]float64, error) {
